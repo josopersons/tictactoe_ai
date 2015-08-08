@@ -74,6 +74,8 @@ class TicTacToeAI:
         if state not in self.solutions:
             self.solve_state(state)
         children = self.get_child_states(state)
+        if not children:
+            return None
         move_state = None
         for child in children:
             if self.solutions[child] == "loss":
