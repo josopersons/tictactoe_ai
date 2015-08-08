@@ -1,10 +1,14 @@
-from tkinter import Frame, Canvas, Button, Label, ALL, Tk
+try:
+    from tkinter import Frame, Canvas, Button, Label, ALL, Tk
+except ImportError:
+    from Tkinter import Frame, Canvas, Button, Label, ALL, Tk
+
 
 from TicTacToe_Game import TicTacToe
 from TicTacToe_AI import TicTacToeAI
 
 
-class main:
+class TicTacToeGUI:
 
     def __init__(self, master):
         # Initial Frame
@@ -115,6 +119,7 @@ class main:
         self.ai_symbol = 'x'
         self.start()
 
-root = Tk()
-app = main(root)
-root.mainloop()
+if __name__ == "__main__":
+    root = Tk()
+    app = TicTacToeGUI(root)
+    root.mainloop()
