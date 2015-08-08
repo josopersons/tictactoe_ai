@@ -45,42 +45,22 @@ class TicTacToe():
             'x'/'o' -- For a player victory
             't'     -- If the game ends in a tie.
         """
-        e = 'e'
         # returns x, o for victory, e for unfinished, and t for tie
-        has_empty = False
-        line_1 = set()
-        line_2 = set()
-        # check horizontals and verticals
+        lines = []
+        # Add the diagonals
+        lines.append([self._board[i][i] for i in range(3)])
+        lines.append([self._board[i][2-i] for i in range(3)])
+        # Horizonatals and verticals
         for i in range(3):
-            for j in range(3):
-                # check to see if board is filled
-                if self._board[i][j] == e:
-                    has_empty = True
-                # horizontals
-                line_1.add(self._board[i][j])
-                # verticals
-                line_2.add(self._board[j][i])
-            # check lines for victory
-            if self.check_line(line_1):
-                return self.check_line(line_1)
-            if self.check_line(line_2):
-                return self.check_line(line_2)
-            # clear and check next set
-            line_1.clear()
-            line_2.clear()
-        # check diagonals
-        for i in range(3):
-            line_1.add(self._board[i][i])
-            line_2.add(self._board[i][2 - i])
-        if self.check_line(line_1):
-            return self.check_line(line_1)
-        if self.check_line(line_2):
-            return self.check_line(line_2)
-        # indicate whether or not the game is finished
-        if has_empty:
+            lines.append(self._board[i])
+            lines.append([self._board[i][j] for j in range(3)])
+        if ['x', 'x' 'x'] in lines:
+            return 'x'
+        elif ['o', 'o', 'o'] in lines:
+            return 'o'
+        if any('e' in l for l in self._board):
             return 'e'
-        else:
-            return 't'
+        return 't'
 
     def create_board(self):
         """Returns an empty 3x3 board
@@ -122,17 +102,6 @@ class TicTacToe():
             self._turn = 'o'
         else:
             self._turn = 'x'
-
-    def check_line(self, line):
-        """Checks if a line on the board contains all x's or o's.
-        Returns 'x'/'o' if it contains all 'x'/'o', None otherwise.
-        """
-        if 'e' not in line and 'o' not in line:
-            return 'x'
-        elif 'e' not in line and 'x' not in line:
-            return 'o'
-        else:
-            return None
 
     def get_board(self):
         return self._board
