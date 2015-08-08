@@ -18,16 +18,11 @@ class main:
         self.x_button = Button(self.frame, text='Play as X', height=4, command=self.set_player_x, bg='white', fg='black')
         self.o_button = Button(self.frame, text='Play as O', height=4, command=self.set_player_o, bg='white', fg='red')
 
-        # Secondary frame
-        self.frame_two = Frame(self.frame)
-        self.frame_two.pack(fill="both", expand=True)
-
         # Game start button and info box
-        self.start_button = Button(self.frame_two, text="START", height=4, command=self.start, bg='white', fg='purple')
-        self.info_box = Label(self.frame_two, text='Tic Tac Toe Game', height=4, bg='white', fg='blue')
+        self.start_button = Button(self.frame, text="START", height=4, command=self.start, bg='white', fg='purple')
+        self.info_box = Label(self.frame, text='Tic Tac Toe Game', height=4, bg='white', fg='blue')
 
         self.clean_game_board()
-        self.set_player_x()
 
     def start(self):
         self.set_game_board()
@@ -106,23 +101,19 @@ class main:
     def clean_game_board(self):
         self.canvas.pack_forget()
         self.info_box.pack_forget()
-        self.start_button["text"] = "START"
-        self.start_button["command"] = self.start
-        self.start_button.pack(fill="both", expand=True)
+        self.start_button.pack_forget()
         self.x_button.pack(fill="both", expand=True)
         self.o_button.pack(fill="both", expand=True)
 
     def set_player_x(self):
-        self.x_button["bg"] = 'gray'
-        self.o_button["bg"] = 'white'
         self.player_symbol = 'x'
         self.ai_symbol = 'o'
+        self.start()
 
     def set_player_o(self):
-        self.x_button["bg"] = 'white'
-        self.o_button["bg"] = 'gray'
         self.player_symbol = 'o'
         self.ai_symbol = 'x'
+        self.start()
 
 root = Tk()
 app = main(root)
