@@ -1,0 +1,12 @@
+Tic Tac Toe AI
+
+What is it
+------------
+
+A game of tic tac toe against a computer opponent.
+
+
+How to play
+-------------
+
+Run the tictactoe_gui.py file in the main directory with Python 2.7 or up.

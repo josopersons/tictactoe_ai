@@ -17,7 +17,8 @@ class TicTacToe():
         Expects:
             player -- The player symbol ('x'/'o').
             square -- The TicTacToe square the move is to be made on.
-                      The coordinates should be accesible via (square[0], square[1]).
+                      The coordinates should be accesible via
+                      (square[0], square[1]).
         Returns:
             "Success" -- If the move was made correctly
             The error made -- If the move was invalid
@@ -48,7 +49,7 @@ class TicTacToe():
         lines = []
         # Add the diagonals
         lines.append([self._board[i][i] for i in range(3)])
-        lines.append([self._board[i][2-i] for i in range(3)])
+        lines.append([self._board[i][2 - i] for i in range(3)])
         # Horizontals and verticals
         for i in range(3):
             lines.append(self._board[i])

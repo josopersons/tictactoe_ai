@@ -25,14 +25,15 @@ class TicTacToeAI:
 
     def solve_state(self, state):
         """Solves state given. Will also solve all child states of this state.
-        Win/loss for a state always given in terms of player who should go next.
+        Win/loss for a state always given in terms of player who should go
+        next.
 
         Expects:
             state -- String representation of game state.
 
         Returns:
-            "win"/"loss"/"tie" -- The result of the game if played optimally from
-                                  this state.
+            "win"/"loss"/"tie" -- The result of the game if played optimally
+                                  from this state.
         """
         if state not in self.solutions:
             result = "loss"
@@ -67,7 +68,7 @@ class TicTacToeAI:
                 player = "o"
             for i in range(len(state)):
                 if state[i] == "e":
-                    new_state = state[:i] + player + state[i+1:]
+                    new_state = state[:i] + player + state[i + 1:]
                     children.append(new_state)
         return children
 
@@ -92,11 +93,11 @@ class TicTacToeAI:
         for i in range(3):
             horizontal = ""
             vertical = ""
-            diagonal_one += state[i*3 + i]
-            diagonal_two += state[i*2 + 2]   # i*3 + 2 - i
+            diagonal_one += state[i * 3 + i]
+            diagonal_two += state[i * 2 + 2]   # i*3 + 2 - i
             for j in range(3):
-                horizontal += state[i*3 + j]
-                vertical += state[j*3 + i]
+                horizontal += state[i * 3 + j]
+                vertical += state[j * 3 + i]
             if any(l in victory for l in (horizontal, vertical)):
                 return "loss"
         if any(l in victory for l in (diagonal_one, diagonal_two)):
@@ -112,17 +113,17 @@ class TicTacToeAI:
 
     def get_move(self, state):
         """Operates under the assumption that this is the current game state
-        and the next move requested is for the player who is about to make a move.
+        and the next move requested is for the player who is about to make a
+        move.
 
-        Expects: 
-            state -- String representation of game state or 2-D array representation
-                   of game state.
-                    State must be valid.
+        Expects:
+            state -- String representation of game state or 2-D array
+                     representation of game state. State must be valid.
 
         Returns:
-            move -- A tuple containing the coordinates of square on the tic tac toe
-                    board. Coordinates are such that the top left square is (0, 0)
-                    and the bottom right square is (2, 2).
+            move -- A tuple containing the coordinates of square on the
+                    tic tac toe board. Coordinates are such that the top left
+                    square is (0, 0) and the bottom right square is (2, 2).
         """
         if type(state) is not str:
             state = self.convert_state(state)

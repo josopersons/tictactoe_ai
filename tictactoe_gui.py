@@ -21,12 +21,18 @@ class TicTacToeGUI:
         self.canvas = Canvas(self.frame, width=300, height=300)
 
         # Symbol selection buttons
-        self.x_button = Button(self.frame, text='Play as X', height=4, command=self.set_player_x, bg='white', fg='black')
-        self.o_button = Button(self.frame, text='Play as O', height=4, command=self.set_player_o, bg='white', fg='red')
+        self.x_button = Button(self.frame, text='Play as X', height=4,
+                               command=self.set_player_x, bg='white',
+                               fg='black')
+        self.o_button = Button(self.frame, text='Play as O', height=4,
+                               command=self.set_player_o, bg='white',
+                               fg='red')
 
         # Game start button and info box
-        self.start_button = Button(self.frame, text="START", height=4, command=self.start, bg='white', fg='purple')
-        self.info_box = Label(self.frame, text='Tic Tac Toe Game', height=4, bg='white', fg='blue')
+        self.start_button = Button(self.frame, text="START", height=4,
+                                   command=self.start, bg='white', fg='purple')
+        self.info_box = Label(self.frame, text='Tic Tac Toe Game', height=4,
+                              bg='white', fg='blue')
 
         self.clean_game_board()
 
@@ -104,14 +110,17 @@ class TicTacToeGUI:
         self.start_button["command"] = self.clean_game_board
 
     def draw_x(self, x, y):
-        self.canvas.create_line(x+20, y+20, x-20, y-20, width=4, fill="black")
-        self.canvas.create_line(x-20, y+20, x+20, y-20, width=4, fill="black")
+        self.canvas.create_line(x + 20, y + 20, x - 20, y - 20, width=4,
+                                fill="black")
+        self.canvas.create_line(x - 20, y + 20, x + 20, y - 20, width=4,
+                                fill="black")
 
     def draw_o(self, x, y):
-        self.canvas.create_oval(x+25, y+25, x-25, y-25, width=4, outline="red")
+        self.canvas.create_oval(x + 25, y + 25, x - 25, y - 25, width=4,
+                                outline="red")
 
     def set_game_board(self):
-        """Hides the game start buttons, reveals the game board, and info box."""
+        """Hides game start buttons, reveals the game board and info box."""
         self.start_button.pack_forget()
         self.x_button.pack_forget()
         self.o_button.pack_forget()
