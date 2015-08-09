@@ -4,11 +4,13 @@ except ImportError:
     from Tkinter import Frame, Canvas, Button, Label, ALL, Tk
 
 
-from TicTacToe_Game import TicTacToe
-from TicTacToe_AI import TicTacToeAI
+from tictactoe_game import TicTacToe
+from tictactoe_ai import TicTacToeAI
 
 
 class TicTacToeGUI:
+
+    ai = None
 
     def __init__(self, master):
         # Initial Frame
@@ -29,20 +31,29 @@ class TicTacToeGUI:
         self.clean_game_board()
 
     def start(self):
+        """Sets up game board, starts a tic tac toe game,
+        and a new AI if one doesn't exist. AI makes first move if
+        playing as X
+        """
         self.set_game_board()
         self.game = TicTacToe()
         self.game.start()
-        self.ai = TicTacToeAI()
+        if not self.ai:
+            self.ai = TicTacToeAI()
 
         if self.ai_symbol == 'x':
             self.ai_action()
 
     def _board(self):
+        """Draws tic tac toe board"""
         self.canvas.create_rectangle(0, 0, 300, 300, outline="black")
         self.canvas.create_rectangle(100, 300, 200, 0, outline="black")
         self.canvas.create_rectangle(0, 100, 300, 200, outline="black")
 
     def user_action(self, event):
+        """Attempts to take action that matches user click. If the move is valid,
+        then calls the AI to make the next move. If not, displays the error.
+        """
         move_x = event.x // 100
         move_y = event.y // 100
         move_result = self.game.update(self.player_symbol, (move_x, move_y))
@@ -54,11 +65,15 @@ class TicTacToeGUI:
             else:
                 self.draw_o(board_x, board_y)
             if not self.completed():
-                self.ai_action()
+                # Wait a bit before calling the ai, for visual style
+                self.frame.after(500, self.ai_action)
         else:
             self.info_box['text'] = move_result
 
     def ai_action(self):
+        """Gets the next move from the AI based on current game state,
+        and plays.
+        """
         state = self.game.get_board()
         move = self.ai.get_move(state)
         move_result = self.game.update(self.ai_symbol, move)
@@ -72,6 +87,9 @@ class TicTacToeGUI:
             self.completed()
 
     def completed(self):
+        """Checks the game status. If completed, displays the result,
+        and asks whether the player would like to start another game.
+        """
         status = self.game.done()
         if status == 'e':
             return False
@@ -93,6 +111,7 @@ class TicTacToeGUI:
         self.canvas.create_oval(x+25, y+25, x-25, y-25, width=4, outline="red")
 
     def set_game_board(self):
+        """Hides the game start buttons, reveals the game board, and info box."""
         self.start_button.pack_forget()
         self.x_button.pack_forget()
         self.o_button.pack_forget()
@@ -103,6 +122,7 @@ class TicTacToeGUI:
         self._board()
 
     def clean_game_board(self):
+        """Hides game board and label, reveals game start buttons."""
         self.canvas.pack_forget()
         self.info_box.pack_forget()
         self.start_button.pack_forget()

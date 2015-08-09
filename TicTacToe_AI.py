@@ -3,17 +3,37 @@ class TicTacToeAI:
     """The dictionary solutions maps a board state to a result.
     The results are either 'win', 'loss' or 'tie'. The results are given
     in terms of the player who is next to move.
+
+    All states are represented by a nine character string, with 'e'
+    indicating and empty space, and 'x'/'o' indicating the respective
+    tic tac toe symbols.
+
+    A valid state is one reachable without breaking any rules of tic tac toe,
+    or playing past the endgame.
     """
 
     solutions = {}
     solved = False
 
     def solve(self):
+        """Solves all possible valid states to determine whether the state
+        will lead to a win, loss or tie.
+        """
         if not self.solved:
             self.solve_state("eeeeeeeee")
             self.solved = True
 
     def solve_state(self, state):
+        """Solves state given. Will also solve all child states of this state.
+        Win/loss for a state always given in terms of player who should go next.
+
+        Expects:
+            state -- String representation of game state.
+
+        Returns:
+            "win"/"loss"/"tie" -- The result of the game if played optimally from
+                                  this state.
+        """
         if state not in self.solutions:
             result = "loss"
             children = self.get_child_states(state)
@@ -29,6 +49,17 @@ class TicTacToeAI:
         return self.solutions[state]
 
     def get_child_states(self, state):
+        """Finds all the states that can be reached from the current state
+        with one move.
+
+        Expects:
+            state -- String representation of game state. State must be valid.
+
+        Returns:
+            List of child states
+            Empty list -- If the state is one with no more moves to be made
+                          it has no child states.
+        """
         children = []
         if self.end_result(state) == "incomplete":
             player = "x"
@@ -41,7 +72,20 @@ class TicTacToeAI:
         return children
 
     def end_result(self, state):
-        # returns incomplete loss tie
+        """Checks whether the game is complete and returns the state of
+        the game.
+
+        Expects:
+            state -- String representation of game state. State must be
+                     valid.
+
+        Returns:
+            "incomplete" -- If the game is not finished yet.
+            "tie"        -- If the game has finished and the result is a tie.
+            "loss"       -- If the game has finished and a player has won/lost.
+                            The next move would have belonged to the player
+                            who has lost, ergo the state is recorded as a loss.
+        """
         victory = ["xxx", "ooo"]
         diagonal_one = ""
         diagonal_two = ""
@@ -62,12 +106,23 @@ class TicTacToeAI:
         return "incomplete"
 
     def is_solved(self):
+        """Checks whether the full game has been solved.
+        """
         return "eeeeeeeee" in self.solutions
 
     def get_move(self, state):
         """Operates under the assumption that this is the current game state
         and the next move requested is for the player who is about to make a move.
-        Also assumes the current state is valid and that the game is not over.
+
+        Expects: 
+            state -- String representation of game state or 2-D array representation
+                   of game state.
+                    State must be valid.
+
+        Returns:
+            move -- A tuple containing the coordinates of square on the tic tac toe
+                    board. Coordinates are such that the top left square is (0, 0)
+                    and the bottom right square is (2, 2).
         """
         if type(state) is not str:
             state = self.convert_state(state)
@@ -91,6 +146,14 @@ class TicTacToeAI:
         return move
 
     def convert_state(self, state):
+        """Converts a 2-D array state into a string state.
+
+        Expects:
+            state -- A 2-D array representing game state.
+
+        Returns:
+            Game state represented as a string
+        """
         result = []
         for i in state:
             result.append("".join(i))

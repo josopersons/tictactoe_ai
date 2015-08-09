@@ -45,16 +45,15 @@ class TicTacToe():
             'x'/'o' -- For a player victory
             't'     -- If the game ends in a tie.
         """
-        # returns x, o for victory, e for unfinished, and t for tie
         lines = []
         # Add the diagonals
         lines.append([self._board[i][i] for i in range(3)])
         lines.append([self._board[i][2-i] for i in range(3)])
-        # Horizonatals and verticals
+        # Horizontals and verticals
         for i in range(3):
             lines.append(self._board[i])
-            lines.append([self._board[i][j] for j in range(3)])
-        if ['x', 'x' 'x'] in lines:
+            lines.append([self._board[j][i] for j in range(3)])
+        if ['x', 'x', 'x'] in lines:
             return 'x'
         elif ['o', 'o', 'o'] in lines:
             return 'o'
@@ -104,4 +103,5 @@ class TicTacToe():
             self._turn = 'x'
 
     def get_board(self):
+        """Returns the current board state in the form of a 2-D array."""
         return self._board
